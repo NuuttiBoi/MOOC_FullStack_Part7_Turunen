@@ -8,6 +8,9 @@ import { Routes, Route, Link, useMatch, useNavigate, Navigate } from 'react-rout
 import BlogList from './components/BlogList.jsx'
 import LoginForm from './components/LoginForm.jsx'
 import {Page} from './components/styles.js'
+import ErrorBound from './components/ErrorBound.jsx'
+import RouteNotFound from "./components/RouteNotFound.jsx";
+
 
 const App = () => {
     const [blogs, setBlogs] = useState([])
@@ -128,8 +131,7 @@ const App = () => {
                     )}
                 </div>
             </Page>
-
-
+            <ErrorBound>
             <Routes>
                 <Route
                     path="/"
@@ -173,7 +175,9 @@ const App = () => {
                             : <Navigate to="/login" replace />
                     }
                 />
+                <Route path="*" element={<RouteNotFound/>} />
             </Routes>
+            </ErrorBound>
         </div>
     )
 }
