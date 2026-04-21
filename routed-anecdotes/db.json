@@ -1,18 +1,40 @@
 {
   "anecdotes": [
     {
-      "content": "If it hurts, do it more often",
-      "author": "Jez Humble",
-      "info": "https://martinfowler.com/bliki/FrequencyReducesDifficulty.html",
-      "votes": 0,
-      "id": 1
-    },
-    {
       "content": "Premature optimization is the root of all evil",
       "author": "Donald Knuth",
       "info": "http://wiki.c2.com/?PrematureOptimization",
       "votes": 0,
-      "id": 2
+      "id": "2"
+    },
+    {
+      "content": "ttqtqtqtqtq",
+      "author": "wtttq3qt",
+      "info": "qyq3yyyyqy",
+      "votes": 0,
+      "id": "eWeKcwPKBjc"
+    },
+    {
+      "content": "wtwtwttw",
+      "author": "wtwttwt",
+      "info": "wwttwtww",
+      "votes": 0,
+      "id": "cEGik-6kO-M"
+    },
+    {
+      "content": "teetett",
+      "author": "ttttt2t2",
+      "info": "ywywy",
+      "votes": 0,
+      "id": "XRVlupRkvpU"
+    },
+    {
+      "content": "ggwewge",
+      "author": "wgwgg",
+      "info": "wgwgw",
+      "votes": 0,
+      "id": "XALAyZc1FbA"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
