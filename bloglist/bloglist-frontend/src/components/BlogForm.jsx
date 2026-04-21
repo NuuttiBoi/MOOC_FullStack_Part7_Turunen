@@ -1,56 +1,56 @@
-import { useState } from 'react'
-import {Input, Button} from './styles'
+import { useState } from 'react';
+import { Input, Button } from './styles';
 
 const BlogForm = ({ createBlog }) => {
-    const [title, setTitle] = useState('')
-    const [author, setAuthor] = useState('')
-    const [url, setUrl] = useState('')
+  const [title, setTitle] = useState('');
+  const [author, setAuthor] = useState('');
+  const [url, setUrl] = useState('');
 
-    const addBlog = (event) => {
-        event.preventDefault()
-        createBlog({
-            title,
-            author,
-            url
-        })
-        // clear inputs after submission
-        setTitle('')
-        setAuthor('')
-        setUrl('')
-    }
+  const addBlog = (event) => {
+    event.preventDefault();
+    createBlog({
+      title,
+      author,
+      url,
+    });
+    // clear inputs after submission
+    setTitle('');
+    setAuthor('');
+    setUrl('');
+  };
 
-    return (
+  return (
+    <div>
+      <h2>Create a new blog</h2>
+      <form onSubmit={addBlog}>
         <div>
-            <h2>Create a new blog</h2>
-            <form onSubmit={addBlog}>
-                <div>
-                    title
-                    <Input
-                        placeholder={'write blog title here'}
-                        value={title}
-                        onChange={event => setTitle(event.target.value)}
-                    />
-                </div>
-                <div>
-                    author
-                    <Input
-                        placeholder={'write blog author here'}
-                        value={author}
-                        onChange={event => setAuthor(event.target.value)}
-                    />
-                </div>
-                <div>
-                    url
-                    <Input
-                        placeholder={'write blog url here'}
-                        value={url}
-                        onChange={event => setUrl(event.target.value)}
-                    />
-                </div>
-                <Button type="submit">create</Button>
-            </form>
+          title
+          <Input
+            placeholder={'write blog title here'}
+            value={title}
+            onChange={(event) => setTitle(event.target.value)}
+          />
         </div>
-    )
-}
+        <div>
+          author
+          <Input
+            placeholder={'write blog author here'}
+            value={author}
+            onChange={(event) => setAuthor(event.target.value)}
+          />
+        </div>
+        <div>
+          url
+          <Input
+            placeholder={'write blog url here'}
+            value={url}
+            onChange={(event) => setUrl(event.target.value)}
+          />
+        </div>
+        <Button type="submit">create</Button>
+      </form>
+    </div>
+  );
+};
 
-export default BlogForm
+export default BlogForm;

@@ -1,19 +1,13 @@
-import {Notificationbox} from "./styles.js";
+import { Notificationbox } from './styles.js';
+import { useMessageStore, useNotification } from '../stores/notificationStore';
 
-const Notification = ({ message }) => {
-    if (message === null) {
-        return null
-    }
+const Notification = () => {
+  const message = useNotification()
+  if (!message) {
+    return null;
+  }
 
-    {/*
-    return <div className="error">{message}</div>
-    */}
+  return <Notificationbox>{message}</Notificationbox>;
+};
 
-    return (
-        <Notificationbox>
-            {message}
-        </Notificationbox>
-    )
-}
-
-export default Notification
+export default Notification;

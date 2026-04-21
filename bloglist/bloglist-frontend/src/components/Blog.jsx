@@ -1,62 +1,121 @@
 import { useState } from 'react'
-import blogService from '../services/blogs'
+import {
+  Card,
+  CardContent,
+  Typography,
+  Button,
+  Box,
+  Link,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+} from '@mui/material'
 
-const Blog = ({ blog, currentUser, handleDelete, handleLike }) => {
-  const [visible, setVisible] = useState(false)
-  const [likes, setLikes] = useState(blog.likes)
+const Blog = ({ blog, handleLike, currentUser, handleDelete }) => {
+  const [confirmOpen, setConfirmOpen] = useState(false)
 
-  const toggleVisibility = () => setVisible(!visible)
-
-  /*
-  const handleLike = async () => {
-    try {
-      const updatedBlog = {
-        user: blog.user.id || blog.user._id, // send user id
-        likes: likes + 1,
-        author: blog.author,
-        title: blog.title,
-        url: blog.url
-      }
-
-      const returnedBlog = await blogService.update(blog.id, updatedBlog)
-      setLikes(returnedBlog.likes)
-    } catch (error) {
-      console.error(error)
-    }
+  if (!blog) {
+    return null
   }
 
-   */
+  const comments = blog.comments || []
 
-  const blogStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: 'solid',
-    borderWidth: 1,
-    marginBottom: 5
+  const canBeRemoved = () =>
+    currentUser && blog.user && currentUser.username === blog.user.username
+
+  const handleRemove = () => {
+    handleDelete(blog)
+    setConfirmOpen(false)
   }
 
   return (
-      <div style={blogStyle}>
-        <div>
-          {blog.title} {blog.author}
-          <button onClick={toggleVisibility}>
-            {visible ? 'hide' : 'view'}
-          </button>
-        </div>
+    <Card sx={{ mt: 2, maxWidth: 600 }} className="blog">
+      <CardContent>
+        <Typography variant="h5" gutterBottom>
+          {blog.title}
+        </Typography>
 
-        {visible && (
-            <div>
-              <div>{blog.url}</div>
-              <div>
-                likes {likes} <button onClick={handleLike}>like</button>
-              </div>
-              {currentUser.username === blog.user?.username && (
-                  <button onClick={() => handleDelete(blog)}>remove</button>
-              )}
-              <div>{blog.user && blog.user.name}</div>
-            </div>
-        )}
-      </div>
+        <Typography variant="subtitle1" color="text.secondary" gutterBottom>
+          by {blog.author}
+        </Typography>
+
+        <Link
+          href={blog.url}
+          target="_blank"
+          rel="noopener"
+          display="block"
+          sx={{ mb: 1 }}
+        >
+          {blog.url}
+        </Link>
+
+        <Typography variant="body2" color="text.secondary" gutterBottom>
+          Added by {blog.user?.name || 'unknown'}
+        </Typography>
+
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 1 }}>
+          <Typography variant="body1">{blog.likes} likes</Typography>
+
+          {currentUser && (
+            <Button
+              size="small"
+              variant="outlined"
+              onClick={() => handleLike(blog)}
+            >
+              like
+            </Button>
+          )}
+
+          {canBeRemoved() && (
+            <Button
+              size="small"
+              variant="outlined"
+              color="error"
+              onClick={() => setConfirmOpen(true)}
+            >
+              remove
+            </Button>
+          )}
+        </Box>
+
+        <Box sx={{ mt: 3 }}>
+          <Typography variant="h6" gutterBottom>
+            Comments
+          </Typography>
+
+          {comments.length === 0 ? (
+            <Typography variant="body2" color="text.secondary">
+              No comments yet
+            </Typography>
+          ) : (
+            <ul>
+              {comments.map((comment, index) => (
+                <li key={index}>
+                  <Typography variant="body2">{comment}</Typography>
+                </li>
+              ))}
+            </ul>
+          )}
+        </Box>
+      </CardContent>
+
+      <Dialog open={confirmOpen} onClose={() => setConfirmOpen(false)}>
+        <DialogTitle>Remove blog</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Remove blog <strong>{blog.title}</strong> by {blog.author}?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setConfirmOpen(false)}>cancel</Button>
+          <Button onClick={handleRemove} color="error" variant="contained">
+            remove
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Card>
   )
 }
 
